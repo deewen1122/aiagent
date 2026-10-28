@@ -6,10 +6,6 @@
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// Arc Mainnet ERC-8004 IdentityRegistry
-// Source: https://docs.arc.io/arc/references/contract-addresses.md
-// arc-studio-allow-onchain-literal
-const IDENTITY_REGISTRY = '0x8004A169FB4a3325136EB29fA0ceB6D2e539a432';
 
 export default function handler(_req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,8 +18,7 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  const agentId    = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
-  const sellerAddr = process.env.VITE_SELLER_ADDRESS   ?? '0x0000000000000000000000000000000000000000';
+  const agentId = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
 
   const serviceEntry = {
     name:        'FinancialQuery',
@@ -33,19 +28,13 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
   };
 
   const card = {
+    id:          agentId !== 'unregistered' ? Number(agentId) : null,
     name:        'FinancialDataAgent',
-    description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset.',
+    description: 'Autonomous AI agent that computes financial metrics for any asset.',
     image:       null,
     x402:        true,
     services:    [serviceEntry],
     items:       [serviceEntry],
-    // ERC-8004 extended fields (preserved for registry indexers)
-    type:          'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
-    active:        true,
-    sellerAddress: sellerAddr,
-    registrations: agentId !== 'unregistered'
-      ? [{ agentId: Number(agentId), agentRegistry: `eip155:5042:${IDENTITY_REGISTRY}` }]
-      : [],
   };
 
   res.status(200).json(card);
