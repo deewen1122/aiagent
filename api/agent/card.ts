@@ -25,53 +25,27 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
   const agentId    = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
   const sellerAddr = process.env.VITE_SELLER_ADDRESS   ?? '0x0000000000000000000000000000000000000000';
 
+  const serviceEntry = {
+    name:        'FinancialQuery',
+    endpoint:    '/api/agent/query',
+    description: 'Computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset.',
+    price:       '0.001',
+  };
+
   const card = {
-    type:        'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
     name:        'FinancialDataAgent',
     description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset.',
-    // x402 discovery format — top-level items list
-    items: [
-      {
-        name:        'FinancialQuery',
-        endpoint:    '/api/agent/query',
-        description: 'Computes volatility, Sharpe ratio, beta, and RSI for assets',
-        price:       '0.001',
-      },
-    ],
-    // ERC-8004 services list
-    services: [
-      {
-        name:        'FinancialQuery',
-        endpoint:    '/api/agent/query',
-        version:     '1.0.0',
-        schema: {
-          request: {
-            asset:  'string — ticker symbol e.g. BTC, ETH, SOL',
-            metric: 'string — volatility | return | sharpe | beta | volume | price | rsi',
-            period: 'string — 7d | 30d | 90d | 1y',
-          },
-          response: {
-            asset:              'string',
-            metric:             'string',
-            period:             'string',
-            value:              'number',
-            unit:               'string',
-            confidence:         'number 0-100',
-            computedAt:         'ISO-8601 timestamp',
-            agentId:            'string',
-            settlementVerified: 'boolean',
-          },
-        },
-      },
-    ],
-    x402:          true,
-    x402Price:     '0.001 USDC',
+    image:       null,
+    x402:        true,
+    services:    [serviceEntry],
+    items:       [serviceEntry],
+    // ERC-8004 extended fields (preserved for registry indexers)
+    type:          'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
     active:        true,
     sellerAddress: sellerAddr,
     registrations: agentId !== 'unregistered'
       ? [{ agentId: Number(agentId), agentRegistry: `eip155:5042:${IDENTITY_REGISTRY}` }]
       : [],
-    supportedTrust: ['reputation'],
   };
 
   res.status(200).json(card);
