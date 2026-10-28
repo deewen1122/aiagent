@@ -28,12 +28,22 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
   const card = {
     type:        'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
     name:        'FinancialDataAgent',
-    description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset. Each query costs 0.001 USDC, settled via Circle Gateway Nanopayments on Arc Mainnet.',
+    description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset.',
+    // x402 discovery format — top-level items list
+    items: [
+      {
+        name:        'FinancialQuery',
+        endpoint:    '/api/agent/query',
+        description: 'Computes volatility, Sharpe ratio, beta, and RSI for assets',
+        price:       '0.001',
+      },
+    ],
+    // ERC-8004 services list
     services: [
       {
-        name:     'FinancialQuery',
-        endpoint: '/api/agent/query',
-        version:  '1.0.0',
+        name:        'FinancialQuery',
+        endpoint:    '/api/agent/query',
+        version:     '1.0.0',
         schema: {
           request: {
             asset:  'string — ticker symbol e.g. BTC, ETH, SOL',
@@ -54,7 +64,7 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
         },
       },
     ],
-    x402Support:   true,
+    x402:          true,
     x402Price:     '0.001 USDC',
     active:        true,
     sellerAddress: sellerAddr,
