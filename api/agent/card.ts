@@ -20,9 +20,15 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
 
   const agentId = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
 
+  // Absolute URL so external indexers (Tolly, ArcID) can probe the endpoint directly
+  const host        = (_req.headers['x-forwarded-host'] ?? _req.headers['host'] ?? '') as string;
+  const proto       = (_req.headers['x-forwarded-proto'] ?? 'https') as string;
+  const baseUrl     = host ? `${proto}://${host}` : 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app';
+  const queryUrl    = `${baseUrl}/api/agent/query`;
+
   const serviceEntry = {
     name:        'FinancialQuery',
-    endpoint:    '/api/agent/query',
+    endpoint:    queryUrl,
     description: 'Computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset.',
     price:       '0.001',
   };

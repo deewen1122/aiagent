@@ -108,7 +108,7 @@ function computeMetric(asset: string, metric: Metric, period: string): QueryResu
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS — allow all origins so any agent or indexer can call this
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-PAYMENT, X-PAYMENT-RESPONSE');
   res.setHeader('Access-Control-Expose-Headers', 'PAYMENT-REQUIRED, X-PAYMENT-RESPONSE');
 
@@ -117,24 +117,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  if (req.method !== 'POST') {
+  // Only GET and POST are handled — anything else is a hard reject
+  if (req.method !== 'POST' && req.method !== 'GET') {
     res.status(405).json({ error: 'Method Not Allowed' });
     return;
   }
 
-  // ── 402 gate ────────────────────────────────────────────────────────────────
-  const payment = req.headers['x-payment'];
-  if (!payment) {
-    const resourceUrl = req.headers['x-forwarded-proto']
-      ? `${req.headers['x-forwarded-proto']}://${req.headers['host']}/api/agent/query`
-      : '/api/agent/query';
+  // ── Build absolute resource URL (used in PAYMENT-REQUIRED header) ───────────
+  const proto       = (req.headers['x-forwarded-proto'] ?? 'https') as string;
+  const host        = (req.headers['x-forwarded-host']  ?? req.headers['host'] ?? '') as string;
+  const resourceUrl = host
+    ? `${proto}://${host}/api/agent/query`
+    : 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/api/agent/query';
 
+  // ── 402 gate ─────────────────────────────────────────────────────────────────
+  // GET requests always return 402 — used by Tolly / ArcID discovery probes.
+  // POST requests require an X-PAYMENT header to proceed past the gate.
+  const payment = req.method === 'POST' ? req.headers['x-payment'] : undefined;
+  if (!payment) {
     res.setHeader('PAYMENT-REQUIRED', buildPaymentRequired(resourceUrl));
+    res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=120');
     res.status(402).json({
       error:   'Payment Required',
       message: 'Include an X-PAYMENT header with 0.001 USDC on Arc Mainnet (eip155:5042)',
       amount:  '0.001 USDC',
       network: ARC_MAINNET_CHAIN,
+      payTo:   SELLER_ADDRESS,
     });
     return;
   }
