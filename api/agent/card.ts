@@ -11,7 +11,7 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=120');
+  res.setHeader('Cache-Control', 'no-store, no-cache');
 
   if (_req.method === 'OPTIONS') {
     res.status(204).end();
@@ -20,11 +20,10 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
 
   const agentId = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
 
-  // Absolute URL so external indexers (Tolly, ArcID) can probe the endpoint directly
-  const host        = (_req.headers['x-forwarded-host'] ?? _req.headers['host'] ?? '') as string;
-  const proto       = (_req.headers['x-forwarded-proto'] ?? 'https') as string;
-  const baseUrl     = host ? `${proto}://${host}` : 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app';
-  const queryUrl    = `${baseUrl}/api/agent/query`;
+  // Always use the stable production URL — never the per-deploy preview URL.
+  // Hardcoded so Tolly / ArcID always probe the same canonical endpoint.
+  const BASE_URL = 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app';
+  const queryUrl = `${BASE_URL}/api/agent/query`;
 
   const serviceEntry = {
     name:        'FinancialQuery',

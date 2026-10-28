@@ -123,12 +123,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  // ── Build absolute resource URL (used in PAYMENT-REQUIRED header) ───────────
-  const proto       = (req.headers['x-forwarded-proto'] ?? 'https') as string;
-  const host        = (req.headers['x-forwarded-host']  ?? req.headers['host'] ?? '') as string;
-  const resourceUrl = host
-    ? `${proto}://${host}/api/agent/query`
-    : 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/api/agent/query';
+  // ── Canonical resource URL (stable production — never a preview URL) ─────────
+  const resourceUrl = 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/api/agent/query';
 
   // ── 402 gate ─────────────────────────────────────────────────────────────────
   // GET requests always return 402 — used by Tolly / ArcID discovery probes.
