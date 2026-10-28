@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
+    "start": "bun run server/agent-server.ts",
     "deploy:self": "bun run ./scripts/self-deploy.ts",
     "compass:deploy": "bun run ./scripts/compass-deploy.ts",
     "fetch:abi": "bun run ./scripts/fetch-abi.ts",
@@ -14,7 +16,8 @@
     "contracts:build": "forge build",
     "contracts:test": "forge test",
     "agent:dev": "bun run server/agent-server.ts",
-    "agent:register": "bun run scripts/register-agent.ts"
+    "agent:register": "bun run scripts/register-agent.ts",
+    "agent:set-uri": "bun run scripts/set-agent-uri.ts"
   },
   "dependencies": {
     "@circle-fin/adapter-viem-v2": "^1.19.2",
@@ -50,6 +53,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@vercel/node": "^28.0.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "oxlint": "^1.80.0",
