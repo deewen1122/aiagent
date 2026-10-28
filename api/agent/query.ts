@@ -131,14 +131,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // POST requests require an X-PAYMENT header to proceed past the gate.
   const payment = req.method === 'POST' ? req.headers['x-payment'] : undefined;
   if (!payment) {
-    res.setHeader('PAYMENT-REQUIRED', buildPaymentRequired(resourceUrl));
-    res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=120');
+    const pr = buildPaymentRequired(resourceUrl);
+    res.setHeader('PAYMENT-REQUIRED', pr);
+    // WWW-Authenticate mirrors the payload for validators that look for this header
+    res.setHeader('WWW-Authenticate', `x402 realm="FinancialDataAgent", payment-required="${pr}"`);
+    res.setHeader('Cache-Control', 'no-store');
     res.status(402).json({
-      error:   'Payment Required',
-      message: 'Include an X-PAYMENT header with 0.001 USDC on Arc Mainnet (eip155:5042)',
-      amount:  '0.001 USDC',
-      network: ARC_MAINNET_CHAIN,
-      payTo:   SELLER_ADDRESS,
+      x402Version:  2,
+      error:        'Payment Required',
+      message:      'Include an X-PAYMENT header with 0.001 USDC on Arc Mainnet (eip155:5042)',
+      amount:       '0.001 USDC',
+      amountUnits:  '1000',
+      decimals:     6,
+      network:      ARC_MAINNET_CHAIN,
+      asset:        ARC_MAINNET_USDC,
+      payTo:        SELLER_ADDRESS,
+      accepts: [
+        { scheme: 'exact', network: ARC_MAINNET_CHAIN, asset: ARC_MAINNET_USDC,
+          amount: '1000', payTo: SELLER_ADDRESS },
+      ],
     });
     return;
   }
