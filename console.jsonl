@@ -70,3 +70,95 @@
 {"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793202977852}
 {"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793202977852}
 {"level":"debug","message":"[vite] connected.","timestamp":1793203001830}
+{"level":"debug","message":"[vite] connected.","timestamp":1793204359144}
+{"level":"error","message":"Warning: You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it.","timestamp":1793204379791}
+{"level":"debug","message":"[vite] invalidate /src/main.tsx: Could not Fast Refresh (\"true\" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports","timestamp":1793204379792}
+{"level":"debug","message":"[vite] hot updated: /src/main.tsx","timestamp":1793204379792}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793204379792}
+{"level":"debug","message":"[vite] connected.","timestamp":1793204380293}
+{"level":"debug","message":"(previous line repeated 1× more)","timestamp":1793204428926}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793204428926}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793204428926}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793204428987}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793204428987}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793204431640}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793204431640}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793204431640}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793204431640}
+{"level":"debug","message":"[vite] connected.","timestamp":1793204452096}
+{"level":"debug","message":"[vite] connected.","timestamp":1793204453571}
+{"level":"debug","message":"[vite] connected.","timestamp":1793205251917}
+{"level":"debug","message":"[vite] connected.","timestamp":1793205386445}
+{"level":"debug","message":"[vite] connected.","timestamp":1793205447559}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793205715793}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793205715798}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793205855678}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793205855689}
+{"level":"debug","message":"[vite] hot updated: /src/components/MainnetRegister.tsx","timestamp":1793205948075}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793205948075}
+{"level":"debug","message":"[vite] hot updated: /src/components/MainnetRegister.tsx","timestamp":1793205948171}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793205948171}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793205956242}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793205956247}
+{"level":"debug","message":"[vite] connected.","timestamp":1793205958825}
+{"level":"debug","message":"[vite] connected.","timestamp":1793205959375}
+{"level":"debug","message":"[vite] connected.","timestamp":1793205971458}
+{"level":"log","message":"[vite] server connection lost. Polling for restart...","timestamp":1793206932163}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793206988204}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793206988204}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793206988300}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793206988300}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793206988434}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793206988434}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793206991141}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793206991141}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793206991255}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793206991255}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793206991435}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793206991435}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207000091}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207000092}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207000098}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207000098}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207002922}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207002922}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207002984}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207002984}
+{"level":"error","message":"Warning: You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it.","timestamp":1793207005802}
+{"level":"debug","message":"[vite] invalidate /src/main.tsx: Could not Fast Refresh (\"true\" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports","timestamp":1793207005802}
+{"level":"debug","message":"[vite] hot updated: /src/main.tsx","timestamp":1793207005802}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207005802}
+{"level":"error","message":"Warning: You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it.","timestamp":1793207006092}
+{"level":"debug","message":"[vite] invalidate /src/main.tsx: Could not Fast Refresh (\"true\" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports","timestamp":1793207006093}
+{"level":"debug","message":"[vite] hot updated: /src/main.tsx","timestamp":1793207006093}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207006093}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207829720}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207829720}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207829721}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207829722}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207829852}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207829852}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207829935}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207829935}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207830153}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207830153}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207830271}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207830271}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207837200}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207837200}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207837245}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207837246}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207837318}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207837318}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207837413}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207837413}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207837468}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207837468}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207837785}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207837785}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207839587}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207839587}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207839621}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207839621}
+{"level":"debug","message":"[vite] hot updated: /src/components/AgentDashboard.tsx","timestamp":1793207839739}
+{"level":"debug","message":"[vite] hot updated: /src/index.css","timestamp":1793207839740}

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { ConnectKitButton } from 'connectkit';
 import { useAccount } from 'wagmi';
+import MainnetRegister from './MainnetRegister';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -41,9 +42,10 @@ const ASSETS  = ['BTC', 'ETH', 'SOL', 'ARC', 'USDC', 'ARB'];
 const METRICS = ['volatility', 'return', 'sharpe', 'beta', 'rsi', 'volume'];
 const PERIODS = ['7d', '30d', '90d', '1y'];
 
-const ARC_EXPLORER = 'https://explorer.testnet.arc.io';
+const ARC_EXPLORER = 'https://explorer.arc.io';
+// Arc Mainnet ERC-8004 IdentityRegistry — source: https://docs.arc.io/arc/references/contract-addresses.md
 // arc-studio-allow-onchain-literal
-const IDENTITY_REGISTRY = '0x8004A818BFB912233c491871b3d84c89A494BD9e';
+const IDENTITY_REGISTRY = '0x8004A169FB4a3325136EB29fA0ceB6D2e539a432';
 
 function shortAddr(addr: string) {
   return addr.slice(0, 6) + '...' + addr.slice(-4);
@@ -209,7 +211,7 @@ export default function AgentDashboard() {
             FinancialDataAgent
           </span>
           <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--surface-strong)] text-[var(--muted)] border border-[var(--border)] font-mono">
-            Arc Testnet
+            Arc Mainnet
           </span>
         </div>
         <ConnectKitButton />
@@ -342,7 +344,7 @@ export default function AgentDashboard() {
                 >
                   {m === 'preview'
                     ? <><FlaskConical size={12} /> Preview (free)</>
-                    : <><Zap size={12} /> Live x402 (0.01 USDC)</>
+                    : <><Zap size={12} /> Live x402 (0.001 USDC)</>
                   }
                 </button>
               ))}
@@ -398,8 +400,8 @@ export default function AgentDashboard() {
               {(status === 'paying' || status === 'computing') && <Loader2 size={15} className="animate-spin" />}
               {status === 'paying'    ? 'Authorizing payment...' :
                status === 'computing' ? 'Computing...'           :
-               mode === 'preview'     ? 'Run Preview Query (free)' :
-               'Send Query — 0.01 USDC'}
+               mode === 'preview'     ? 'Run Preview Query (free)'  :
+               'Send Query — 0.001 USDC'}
             </button>
 
             {mode === 'paid' && !isConnected && address === undefined && (
@@ -455,8 +457,8 @@ export default function AgentDashboard() {
                       {`circle services pay "${window.location.origin}/api/agent/query" \\
   -X POST \\
   --address <your-wallet> \\
-  --chain ARC-TESTNET \\
-  --max-amount 0.01 \\
+  --chain ARC \\
+  --max-amount 0.001 \\
   --data '${JSON.stringify({ asset, metric, period })}'`}
                     </div>
                   )}
@@ -465,6 +467,9 @@ export default function AgentDashboard() {
             </AnimatePresence>
           </section>
         </div>
+
+        {/* Arc Mainnet registration */}
+        <MainnetRegister />
 
         {/* x402 flow explainer */}
         <section
@@ -478,7 +483,7 @@ export default function AgentDashboard() {
             {[
               { step: '01', icon: <Terminal size={14} />, title: 'Request',   body: 'Agent sends POST /agent/query without payment header' },
               { step: '02', icon: <AlertCircle size={14} />, title: '402 Returned', body: 'Server returns HTTP 402 with Circle Gateway payment requirements' },
-              { step: '03', icon: <Zap size={14} />, title: 'Gateway Auth', body: 'Circle Gateway authorizes 0.01 USDC on Arc Testnet, adds X-PAYMENT header' },
+              { step: '03', icon: <Zap size={14} />, title: 'Gateway Auth', body: 'Circle Gateway authorizes 0.001 USDC on Arc Mainnet, adds X-PAYMENT header' },
               { step: '04', icon: <CheckCircle size={14} />, title: 'Response', body: 'Server verifies settlement, executes calculation, returns payload' },
             ].map(({ step, icon, title, body }) => (
               <div key={step} className="flex flex-col gap-2 p-3 rounded-xl border border-[var(--border)]" style={{ background: 'var(--surface-muted)' }}>

@@ -2,7 +2,7 @@
  * Autonomous Financial Data Agent — Express backend
  *
  * - Listens on port 3001
- * - POST /agent/query  protected by Circle Gateway Nanopayments (x402, 0.01 USDC on Arc Testnet)
+ * - POST /agent/query  protected by Circle Gateway Nanopayments (x402, 0.01 USDC on Arc Mainnet)
  * - GET  /agent/health  public health check
  * - GET  /agent/card    returns the agent registration card JSON
  */
@@ -26,23 +26,26 @@ app.use((_req, res, next) => {
 });
 
 // ---------------------------------------------------------------------------
-// Circle Gateway Nanopayments middleware (Arc Testnet)
+// Circle Gateway Nanopayments middleware (Arc Mainnet)
 // ---------------------------------------------------------------------------
 const SELLER_ADDRESS = process.env.VITE_SELLER_ADDRESS;
 if (!SELLER_ADDRESS) {
   console.warn('[agent-server] VITE_SELLER_ADDRESS not set — set it in .env before payments settle.');
 }
 
+// Omitting facilitatorUrl selects the mainnet Gateway (https://gateway-api.circle.com).
+// Real USDC will move when a buyer pays the /agent/query endpoint.
 const gateway = createGatewayMiddleware({
   sellerAddress: (SELLER_ADDRESS ?? '0x0000000000000000000000000000000000000000') as `0x${string}`,
-  facilitatorUrl: 'https://gateway-api-testnet.circle.com',
 });
 
 // ---------------------------------------------------------------------------
-// Arc Testnet ERC-8004 registry (Arc Testnet testnet constant — arc-studio-allow-onchain-literal)
+// Arc Mainnet ERC-8004 registry address
+// Source: https://docs.arc.io/arc/references/contract-addresses.md
+// arc-studio-allow-onchain-literal
 // ---------------------------------------------------------------------------
 // arc-studio-allow-onchain-literal
-const IDENTITY_REGISTRY = '0x8004A818BFB912233c491871b3d84c89A494BD9e';
+const IDENTITY_REGISTRY = '0x8004A169FB4a3325136EB29fA0ceB6D2e539a432';
 
 // ---------------------------------------------------------------------------
 // Mock financial data engine
@@ -106,21 +109,21 @@ app.get('/agent/health', (_req, res) => {
   res.json({
     status:           'ok',
     agent:            'FinancialDataAgent',
-    chain:            'Arc Testnet (5042002)',
-    price:            '$0.01 USDC per query',
-    agentId:          process.env.VITE_AGENT_ID ?? 'unregistered',
+    chain:            'Arc Mainnet (5042)',
+    price:            '$0.001 USDC per query',
+    agentId:          process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered',
     identityRegistry: IDENTITY_REGISTRY,
   });
 });
 
 /** Agent registration card (ERC-8004 compatible format) */
 app.get('/agent/card', (_req, res) => {
-  const agentId    = process.env.VITE_AGENT_ID ?? 'unregistered';
+  const agentId    = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
   const sellerAddr = process.env.VITE_SELLER_ADDRESS ?? '0x0000000000000000000000000000000000000000';
   const card = {
     type:        'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
     name:        'FinancialDataAgent',
-    description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset. Each query costs 0.01 USDC, settled via Circle Gateway Nanopayments on Arc Testnet.',
+    description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset. Each query costs 0.01 USDC, settled via Circle Gateway Nanopayments on Arc Mainnet.',
     services: [
       {
         name:     'FinancialQuery',
@@ -147,19 +150,19 @@ app.get('/agent/card', (_req, res) => {
       },
     ],
     x402Support:   true,
-    x402Price:     '0.01 USDC',
+    x402Price:     '0.001 USDC',
     active:        true,
     sellerAddress: sellerAddr,
     registrations: agentId !== 'unregistered'
-      ? [{ agentId: Number(agentId), agentRegistry: `eip155:5042002:${IDENTITY_REGISTRY}` }]
+      ? [{ agentId: Number(agentId), agentRegistry: `eip155:5042:${IDENTITY_REGISTRY}` }]
       : [],
     supportedTrust: ['reputation'],
   };
   res.json(card);
 });
 
-/** Paid query endpoint — requires x402 Gateway payment of $0.01 */
-app.post('/agent/query', gateway.require('$0.01'), (req, res) => {
+/** Paid query endpoint — requires x402 Gateway payment of $0.001 */
+app.post('/agent/query', gateway.require('$0.001'), (req, res) => {
   try {
     const result = computeFinancialData(req.body as QueryRequest);
     res.json(result);
