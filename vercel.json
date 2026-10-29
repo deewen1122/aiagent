@@ -3,9 +3,11 @@
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
-    { "source": "/api/agent/card",   "destination": "/api/agent/card"   },
-    { "source": "/api/agent/health", "destination": "/api/agent/health" },
-    { "source": "/(.*)",             "destination": "/index.html"       }
+    { "source": "/api/agent/card",    "destination": "/api/agent/card"          },
+    { "source": "/api/agent/health",  "destination": "/api/agent/health"        },
+    { "source": "/api/agent/query",   "destination": "/api/agent/query"         },
+    { "source": "/.well-known/x402",  "destination": "/api/.well-known/x402"    },
+    { "source": "/(.*)",              "destination": "/index.html"              }
   ],
   "headers": [
     {
