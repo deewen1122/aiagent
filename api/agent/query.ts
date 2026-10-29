@@ -24,7 +24,9 @@ const GATEWAY_CONTRACT   = '0x77777777dcc4d5a8b6e418fd04d8997ef11000ee';
 const SELLER_ADDRESS     = process.env.VITE_SELLER_ADDRESS ?? '0x0000000000000000000000000000000000000000';
 
 // Amount: 0.001 USDC = 1000 units (6 decimals)
-const AMOUNT = '1000';
+const AMOUNT     = '1000';
+// Max amount cap: $10 USDC = 10_000_000 units (6 decimals) — satisfies Tolly's ≤$10 check
+const MAX_AMOUNT = '10000000';
 
 /**
  * Build the x402 v2 payment requirements object and base64-encode it.
@@ -36,6 +38,7 @@ function buildPaymentRequired(resourceUrl: string): string {
     network:            ARC_MAINNET_CHAIN,
     asset:              ARC_MAINNET_USDC,
     amount:             AMOUNT,
+    maxAmount:          MAX_AMOUNT,
     payTo:              SELLER_ADDRESS,
     maxTimeoutSeconds:  604900,
     extra: {
@@ -148,7 +151,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       payTo:        SELLER_ADDRESS,
       accepts: [
         { scheme: 'exact', network: ARC_MAINNET_CHAIN, asset: ARC_MAINNET_USDC,
-          amount: '1000', payTo: SELLER_ADDRESS },
+          amount: AMOUNT, maxAmount: MAX_AMOUNT, payTo: SELLER_ADDRESS },
       ],
     });
     return;
