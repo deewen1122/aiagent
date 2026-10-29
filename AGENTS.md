@@ -51,7 +51,7 @@ Autonomous AI agent service that:
 
 | Field | Value |
 |-------|-------|
-| **Mainnet Agent ID** | **2841** |
+| **Mainnet Agent ID** | **2866** |
 | Mainnet agentURI | `https://iz8b1a8jcsxcsat7h9m0v.preview.studio.arc.io/api/agent/card` |
 | Mainnet owner | `0x29566e53136f50A3F93ceB3d336DB89E73c03306` |
 | Mainnet explorer | `https://explorer.arc.io/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` |

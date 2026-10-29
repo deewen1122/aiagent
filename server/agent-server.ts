@@ -95,7 +95,7 @@ function computeFinancialData(req: QueryRequest): QueryResponse {
     unit:               unitMap[metric] ?? 'unit',
     confidence:         Math.round(85 + (seed % 13)),
     computedAt:         new Date().toISOString(),
-    agentId:            process.env.VITE_AGENT_ID ?? 'unregistered',
+    agentId:            process.env.VITE_AGENT_ID_MAINNET ?? process.env.VITE_AGENT_ID ?? '2866',
     settlementVerified: true,
   };
 }
@@ -111,14 +111,14 @@ app.get('/agent/health', (_req, res) => {
     agent:            'FinancialDataAgent',
     chain:            'Arc Mainnet (5042)',
     price:            '$0.001 USDC per query',
-    agentId:          process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered',
+    agentId:          process.env.VITE_AGENT_ID_MAINNET ?? '2866',
     identityRegistry: IDENTITY_REGISTRY,
   });
 });
 
 /** Agent registration card (ERC-8004 compatible format) */
 app.get('/agent/card', (_req, res) => {
-  const agentId    = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
+  const agentId    = process.env.VITE_AGENT_ID_MAINNET ?? '2866';
   const sellerAddr = process.env.VITE_SELLER_ADDRESS ?? '0x0000000000000000000000000000000000000000';
   const card = {
     type:        'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',

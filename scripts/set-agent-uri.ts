@@ -6,7 +6,7 @@
  * production endpoint.
  *
  * Usage:
- *   AGENT_OWNER_PRIVATE_KEY=0x... VITE_AGENT_ID_MAINNET=2841 \
+ *   AGENT_OWNER_PRIVATE_KEY=0x... VITE_AGENT_ID_MAINNET=2866 \
  *   NEW_AGENT_URI=https://your-app.vercel.app/api/agent/card \
  *   bun run scripts/set-agent-uri.ts
  *
