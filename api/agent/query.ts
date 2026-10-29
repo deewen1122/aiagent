@@ -9,7 +9,22 @@
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { PAYMENT_REQUIREMENT } from './card';
+
+// arc-studio-allow-onchain-literal
+// Identical to the payment requirement in /api/agent/card — kept in sync manually.
+// Arc Mainnet USDC — source: https://developers.circle.com/stablecoins/usdc-on-chains
+const PAYMENT_REQUIREMENT = {
+  scheme:            'exact',
+  network:           'eip155:5042',
+  asset:             '0x3600000000000000000000000000000000000000',
+  amount:            '1000',
+  payTo:             (process.env.VITE_SELLER_ADDRESS ?? '0x29566e53136f50a3f93ceb3d336db89e73c03306').toLowerCase(),
+  maxTimeoutSeconds: 300,
+  extra: {
+    name:    'USDC',
+    version: '2',
+  },
+};
 
 // ─── Mock financial calculation (same logic as Express server) ────────────────
 type Metric = 'volatility' | 'sharpe' | 'beta' | 'rsi' | 'return';
