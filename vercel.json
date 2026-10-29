@@ -35,6 +35,14 @@
         { "key": "Access-Control-Allow-Origin",  "value": "*" },
         { "key": "Cache-Control",                "value": "no-store" }
       ]
+    },
+    {
+      "source": "/.well-known/(.*).json",
+      "headers": [
+        { "key": "Content-Type",                 "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Cache-Control",                "value": "no-store" }
+      ]
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "standard": "ERC-8004",
+  "version": "1",
+  "agentId": "2841",
+  "registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+  "network": "eip155:5042",
+  "operator": "0x29566e53136f50A3F93ceB3d336DB89E73c03306",
+  "domain": "arc-studio-8d53b7238bae4af6bbfb806d.vercel.app",
+  "discovery": "https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/.well-known/x402",
+  "skills": ["finance.metrics", "finance.volatility", "finance.sharpe", "finance.rsi"]
+}
