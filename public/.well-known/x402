@@ -1,0 +1,47 @@
+{
+  "x402Version": 2,
+  "payTo": "0x29566e53136f50A3F93ceB3d336DB89E73c03306",
+  "items": [
+    {
+      "resource": "https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/api/agent/query",
+      "type": "http",
+      "x402Version": 2,
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "eip155:5042",
+          "asset": "0x3600000000000000000000000000000000000000",
+          "amount": "1000",
+          "maxAmount": "10000000",
+          "payTo": "0x29566e53136f50A3F93ceB3d336DB89E73c03306",
+          "maxTimeoutSeconds": 604900,
+          "extra": {
+            "name": "GatewayWalletBatched",
+            "version": "2",
+            "verifyingContract": "0x77777777dcc4d5a8b6e418fd04d8997ef11000ee"
+          }
+        }
+      ],
+      "description": "Computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset. POST with { asset, metric, period }.",
+      "mimeType": "application/json",
+      "serviceName": "FinancialDataAgent",
+      "tags": ["finance", "arc", "usdc", "metrics"],
+      "extensions": {
+        "bazaar": {
+          "info": {
+            "input": {
+              "type": "http",
+              "method": "POST",
+              "bodyType": "json",
+              "body": { "asset": "ETH", "metric": "volatility", "period": "30d" }
+            },
+            "output": {
+              "type": "json",
+              "example": { "asset": "ETH", "metric": "volatility", "value": 0.42, "unit": "annualised \u03c3" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
