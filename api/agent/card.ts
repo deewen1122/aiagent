@@ -35,7 +35,7 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
   const card = {
     id:          agentId !== 'unregistered' ? Number(agentId) : null,
     name:        'FinancialDataAgent',
-    description: 'Autonomous AI agent that computes financial metrics for any asset.',
+    description: 'Autonomous AI agent that computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset.',
     image:       null,
     x402:        true,
     services:    [serviceEntry],
