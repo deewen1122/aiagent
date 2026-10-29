@@ -6,8 +6,9 @@
     { "source": "/api/agent/card",    "destination": "/api/agent/card"          },
     { "source": "/api/agent/health",  "destination": "/api/agent/health"        },
     { "source": "/api/agent/query",   "destination": "/api/agent/query"         },
-    { "source": "/.well-known/x402",  "destination": "/api/.well-known/x402"    },
-    { "source": "/(.*)",              "destination": "/index.html"              }
+    { "source": "/.well-known/x402",    "destination": "/api/.well-known/x402"    },
+    { "source": "/discovery/resources","destination": "/discovery/resources"     },
+    { "source": "/(.*)",               "destination": "/index.html"             }
   ],
   "headers": [
     {
@@ -21,6 +22,14 @@
     },
     {
       "source": "/.well-known/x402",
+      "headers": [
+        { "key": "Content-Type",                 "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Cache-Control",                "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/discovery/resources",
       "headers": [
         { "key": "Content-Type",                 "value": "application/json; charset=utf-8" },
         { "key": "Access-Control-Allow-Origin",  "value": "*" },

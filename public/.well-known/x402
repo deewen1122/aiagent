@@ -1,6 +1,7 @@
 {
   "x402Version": 2,
   "payTo": "0x29566e53136f50A3F93ceB3d336DB89E73c03306",
+  "discovery": "https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/discovery/resources",
   "items": [
     {
       "resource": "https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/api/agent/query",
@@ -25,23 +26,7 @@
       "description": "Computes financial metrics (volatility, Sharpe ratio, beta, RSI) for any asset. POST with { asset, metric, period }.",
       "mimeType": "application/json",
       "serviceName": "FinancialDataAgent",
-      "tags": ["finance", "arc", "usdc", "metrics"],
-      "extensions": {
-        "bazaar": {
-          "info": {
-            "input": {
-              "type": "http",
-              "method": "POST",
-              "bodyType": "json",
-              "body": { "asset": "ETH", "metric": "volatility", "period": "30d" }
-            },
-            "output": {
-              "type": "json",
-              "example": { "asset": "ETH", "metric": "volatility", "value": 0.42, "unit": "annualised \u03c3" }
-            }
-          }
-        }
-      }
+      "tags": ["finance", "arc", "usdc", "metrics"]
     }
   ]
 }
