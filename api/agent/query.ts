@@ -1,65 +1,15 @@
 /**
- * Vercel serverless function — POST /api/agent/query
+ * Vercel serverless function — GET|POST /api/agent/query
  *
- * x402 payment gate: returns HTTP 402 with a PAYMENT-REQUIRED header when no
- * X-PAYMENT header is present. When payment is present the mock financial
- * calculation runs and the result is returned.
- *
- * The PAYMENT-REQUIRED header is a base64-encoded JSON object following the
- * x402 v2 spec. It advertises 0.001 USDC (1000 units, 6 decimals) on Arc
- * Mainnet (eip155:5042) via Circle Gateway Wallet Batched.
+ * x402 v2 payment gate: every unpaid GET or POST returns HTTP 402 with a
+ * payment offer identical to the discovery document at /api/agent/card.
+ * A paid POST (X-PAYMENT header present) runs the financial calculation.
  *
  * arc-studio-allow-onchain-literal
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// ─── Arc Mainnet USDC (native/ERC-20 unified address on Arc) ─────────────────
-// Source: https://developers.circle.com/stablecoins/usdc-on-chains
-const ARC_MAINNET_USDC   = '0x3600000000000000000000000000000000000000'; // Arc Mainnet
-const ARC_MAINNET_CHAIN  = 'eip155:5042';
-// Circle Gateway Batched verifying contract (same across chains)
-const GATEWAY_CONTRACT   = '0x77777777dcc4d5a8b6e418fd04d8997ef11000ee';
-// Seller address — receives the 0.001 USDC per query
-const SELLER_ADDRESS     = process.env.VITE_SELLER_ADDRESS ?? '0x0000000000000000000000000000000000000000';
-
-// Amount: 0.001 USDC = 1000 units (6 decimals)
-const AMOUNT     = '1000';
-// Max amount cap: $10 USDC = 10_000_000 units (6 decimals) — satisfies Tolly's ≤$10 check
-const MAX_AMOUNT = '10000000';
-
-/**
- * Build the x402 v2 payment requirements object and base64-encode it.
- * Advertises two slots per supported chain (Gateway v1 + v2) on Arc Mainnet.
- */
-function buildPaymentRequired(resourceUrl: string): string {
-  const makeSlot = (version: '1' | '2') => ({
-    scheme:             'exact',
-    network:            ARC_MAINNET_CHAIN,
-    asset:              ARC_MAINNET_USDC,
-    amount:             AMOUNT,
-    maxAmount:          MAX_AMOUNT,
-    payTo:              SELLER_ADDRESS,
-    maxTimeoutSeconds:  300,
-    extra: {
-      name:               'GatewayWalletBatched',
-      version,
-      verifyingContract:  GATEWAY_CONTRACT,
-    },
-  });
-
-  const payload = {
-    x402Version: 2,
-    resource: {
-      url:         resourceUrl,
-      description: 'FinancialDataAgent query — 0.001 USDC per request',
-      mimeType:    'application/json',
-    },
-    accepts: [makeSlot('1'), makeSlot('2')],
-  };
-
-  return Buffer.from(JSON.stringify(payload)).toString('base64');
-}
+import { PAYMENT_REQUIREMENT } from './card';
 
 // ─── Mock financial calculation (same logic as Express server) ────────────────
 type Metric = 'volatility' | 'sharpe' | 'beta' | 'rsi' | 'return';
@@ -126,35 +76,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  // ── Canonical resource URL (stable production — never a preview URL) ─────────
-  const resourceUrl = 'https://arc-studio-8d53b7238bae4af6bbfb806d.vercel.app/api/agent/query';
-
   // ── 402 gate ─────────────────────────────────────────────────────────────────
-  // GET requests always return 402 — used by Tolly / ArcID discovery probes.
-  // POST requests require an X-PAYMENT header to proceed past the gate.
+  // Every unpaid GET or POST returns 402 — GET used by Tolly discovery probes,
+  // POST used by agents that forgot to attach payment.
   const payment = req.method === 'POST' ? req.headers['x-payment'] : undefined;
   if (!payment) {
-    const pr = buildPaymentRequired(resourceUrl);
-    res.setHeader('PAYMENT-REQUIRED', pr);
-    // WWW-Authenticate mirrors the payload for validators that look for this header
-    res.setHeader('WWW-Authenticate', `x402 realm="FinancialDataAgent", payment-required="${pr}"`);
     res.setHeader('Cache-Control', 'no-store');
-    // arc-studio-allow-onchain-literal
     res.status(402).json({
-      error: 'Payment required',
-      accepts: [
-        {
-          x402Version:       2,
-          scheme:            'exact',
-          network:           ARC_MAINNET_CHAIN,
-          maxAmountRequired: AMOUNT,
-          resource:          'USDC',
-          payTo:             SELLER_ADDRESS.toLowerCase(),
-          extra: {
-            facilitatorAddress: '0xf3b533226162224F783D0cC18E642F16bce369BD',
-          },
-        },
-      ],
+      x402Version: 2,
+      error:       'Payment required',
+      accepts:     [PAYMENT_REQUIREMENT],
     });
     return;
   }
