@@ -140,18 +140,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('WWW-Authenticate', `x402 realm="FinancialDataAgent", payment-required="${pr}"`);
     res.setHeader('Cache-Control', 'no-store');
     res.status(402).json({
-      x402Version:  2,
-      error:        'Payment Required',
-      message:      'Include an X-PAYMENT header with 0.001 USDC on Arc Mainnet (eip155:5042)',
-      amount:       '0.001 USDC',
-      amountUnits:  '1000',
-      decimals:     6,
-      network:      ARC_MAINNET_CHAIN,
-      asset:        ARC_MAINNET_USDC,
-      payTo:        SELLER_ADDRESS,
+      error: 'Payment required',
       accepts: [
-        { scheme: 'exact', network: ARC_MAINNET_CHAIN, asset: ARC_MAINNET_USDC,
-          amount: AMOUNT, maxAmount: MAX_AMOUNT, payTo: SELLER_ADDRESS },
+        {
+          scheme:           'exact',
+          network:          'arc',
+          maxAmountRequired: AMOUNT,
+          resource:         'USDC',
+          payTo:            SELLER_ADDRESS.toLowerCase(),
+        },
       ],
     });
     return;
