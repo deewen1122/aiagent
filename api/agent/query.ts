@@ -139,15 +139,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // WWW-Authenticate mirrors the payload for validators that look for this header
     res.setHeader('WWW-Authenticate', `x402 realm="FinancialDataAgent", payment-required="${pr}"`);
     res.setHeader('Cache-Control', 'no-store');
+    // arc-studio-allow-onchain-literal
     res.status(402).json({
       error: 'Payment required',
       accepts: [
         {
-          scheme:           'exact',
-          network:          'arc',
+          x402Version:       2,
+          scheme:            'exact',
+          network:           ARC_MAINNET_CHAIN,
           maxAmountRequired: AMOUNT,
-          resource:         'USDC',
-          payTo:            SELLER_ADDRESS.toLowerCase(),
+          resource:          'USDC',
+          payTo:             SELLER_ADDRESS.toLowerCase(),
+          extra: {
+            facilitatorAddress: '0xf3b533226162224F783D0cC18E642F16bce369BD',
+          },
         },
       ],
     });
