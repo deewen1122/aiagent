@@ -37,11 +37,19 @@
       ]
     },
     {
+      "source": "/.well-known/tolly-agent.json",
+      "headers": [
+        { "key": "Content-Type",                 "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Cache-Control",                "value": "no-store, no-cache, must-revalidate" }
+      ]
+    },
+    {
       "source": "/.well-known/(.*).json",
       "headers": [
         { "key": "Content-Type",                 "value": "application/json; charset=utf-8" },
         { "key": "Access-Control-Allow-Origin",  "value": "*" },
-        { "key": "Cache-Control",                "value": "no-store" }
+        { "key": "Cache-Control",                "value": "no-store, no-cache, must-revalidate" }
       ]
     }
   ]
