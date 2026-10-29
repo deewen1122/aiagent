@@ -188,5 +188,5 @@ const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`[agent-server] Listening on http://localhost:${PORT}`);
   console.log(`[agent-server] Seller: ${process.env.VITE_SELLER_ADDRESS ?? '(not set)'}`);
-  console.log(`[agent-server] Agent ID: ${process.env.VITE_AGENT_ID ?? '(not registered)'}`);
+  console.log(`[agent-server] Agent ID: ${process.env.VITE_AGENT_ID_MAINNET ?? process.env.VITE_AGENT_ID ?? '(not registered)'}`);
 });
