@@ -18,7 +18,7 @@ export default function handler(_req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  const agentId = process.env.VITE_AGENT_ID_MAINNET ?? 'unregistered';
+  const agentId = process.env.VITE_AGENT_ID_MAINNET ?? '2866';
 
   // Always use the stable production URL — never the per-deploy preview URL.
   // Hardcoded so Tolly / ArcID always probe the same canonical endpoint.
