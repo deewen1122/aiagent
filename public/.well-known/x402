@@ -14,7 +14,7 @@
           "amount": "1000",
           "maxAmount": "10000000",
           "payTo": "0x29566e53136f50A3F93ceB3d336DB89E73c03306",
-          "maxTimeoutSeconds": 604900,
+          "maxTimeoutSeconds": 300,
           "extra": {
             "name": "GatewayWalletBatched",
             "version": "2",

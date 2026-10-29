@@ -14,9 +14,17 @@
       "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin",  "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
-        { "key": "Cache-Control",                "value": "public, max-age=60, stale-while-revalidate=120" }
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, X-PAYMENT, X-PAYMENT-RESPONSE" },
+        { "key": "Access-Control-Expose-Headers","value": "PAYMENT-REQUIRED, X-PAYMENT-RESPONSE" }
+      ]
+    },
+    {
+      "source": "/.well-known/x402",
+      "headers": [
+        { "key": "Content-Type",                 "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Cache-Control",                "value": "no-store" }
       ]
     }
   ]

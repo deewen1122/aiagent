@@ -40,7 +40,7 @@ function buildPaymentRequired(resourceUrl: string): string {
     amount:             AMOUNT,
     maxAmount:          MAX_AMOUNT,
     payTo:              SELLER_ADDRESS,
-    maxTimeoutSeconds:  604900,
+    maxTimeoutSeconds:  300,
     extra: {
       name:               'GatewayWalletBatched',
       version,
