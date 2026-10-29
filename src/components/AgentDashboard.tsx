@@ -12,6 +12,7 @@ import MainnetRegister from './MainnetRegister';
 // Types
 // ---------------------------------------------------------------------------
 interface AgentCard {
+  id?: number;
   name: string;
   description: string;
   x402Support: boolean;
@@ -117,7 +118,7 @@ export default function AgentDashboard() {
       .catch(() => setCardError(true));
   }, []);
 
-  const agentId = card?.registrations?.[0]?.agentId;
+  const agentId = card?.id ?? card?.registrations?.[0]?.agentId;
 
   // ---------------------------------------------------------------------------
   // Fire a query (preview = free, paid = x402 gated)
